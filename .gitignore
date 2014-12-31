@@ -40,7 +40,6 @@ DebugUnicode
 *.session
 *.tags
 *.d
-*.o
 *.pyc
 bin
 bin/ofMaker
@@ -48,3 +47,4 @@ lib
 *.mk
 *.workspace.session
 
+/ProjectoED.txt
