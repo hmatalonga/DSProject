@@ -56,3 +56,7 @@ dist/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+configurations.xml
+*.bash
+project.xml
+.dep.inc
