@@ -48,3 +48,11 @@ lib
 *.workspace.session
 
 /ProjectoED.txt
+
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+nb-configuration.xml
