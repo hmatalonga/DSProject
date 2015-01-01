@@ -57,14 +57,14 @@ int checkQueryFormat(char *query) {
     return isValid;
 }
 
-int peformQuery(CNODE *tree, char *query, int verbose) {
+int peformQuery(PERSON *tree, char *query, int verbose) {
     unsigned short int course;
     unsigned char grade;
     char operator, *pch = strtok(query, "C");
     unsigned long int totalRec = 0;
     RESLIST *output = NULL, *ret = NULL;
     BLIST *tempGrade = NULL;
-    CNODE *courseTree = NULL;
+    PERSON *courseTree = NULL;
 
     /**
      * Ler query de pesquisa
@@ -77,6 +77,7 @@ int peformQuery(CNODE *tree, char *query, int verbose) {
      * sort lista de resultados
      * output de valores
      */
+    /*
     
     while (pch != NULL) {
         sscanf(pch, QUERY_FORMAT, &course, &operator, &grade);
@@ -133,5 +134,6 @@ int peformQuery(CNODE *tree, char *query, int verbose) {
     if (verbose)
         printf("Results count -> %ld\n", c);    
     
+     */
     return 0;
 }

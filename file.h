@@ -18,7 +18,7 @@ extern "C" {
 #include "dataobj.h"    
 
 int fileExists();
-CNODE *fileRead(FILE *fp, char *filename, CNODE *tree);
+PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, unsigned char *cc);
 
 #ifdef	__cplusplus
 }

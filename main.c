@@ -16,7 +16,11 @@
  * Main
  */
 int main(int argc, char** argv) {
-    CNODE *myDataset = NULL; // Data structure
+    // Data structures
+    int cc = 20;
+    PERSON *people = NULL;
+    COURSE **courses = (COURSE **) malloc(cc*sizeof(COURSE *));
+    
     char queryInput[QUERY_MAX_SIZE]; // String query
     char filePath[128]; // File path string
     FILE *fp = NULL; // File pointer
@@ -43,7 +47,12 @@ int main(int argc, char** argv) {
     if (!customFile) 
         strcpy(filePath, DATA_FILE_PATH);
     
-    // Begin
+    // Begin ---
+    // Init courses array to NULL
+    for (i = 0; i < 20; i++)
+        courses[i] = NULL;
+    
+    // Build screen
     clearScreen();
     printf(PROGRAM_HEADER);
     
@@ -57,7 +66,8 @@ int main(int argc, char** argv) {
         // if file exists then load it
         if (verbose)
             printf("Loading file...\n");
-        myDataset = fileRead(fp, filePath, myDataset);
+        // Building data struct
+        people = fileRead(fp, filePath, people, courses, &cc);
         isRunning = 1; // Keep alive
         if (verbose)
             printf("DONE\n");        
@@ -86,8 +96,8 @@ int main(int argc, char** argv) {
             // if input is valid continue
             if ((query_det = checkQueryFormat(queryInput)) > 0) {
                 // Show query results if any
-                if (query_det == 1)
-                    peformQuery(myDataset, queryInput, verbose);
+                if (query_det == 1);
+                    //peformQuery(myDataset, queryInput, verbose);
                 else if (query_det == 2) {
                     clearScreen();       
                     printf(PROGRAM_HEADER);

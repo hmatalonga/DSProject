@@ -37,15 +37,14 @@ BLIST *HashLookUp(HASH *hashtable, unsigned char val);
 int HashAdd(HASH *hashtable, unsigned char val);
 
 // Binary Tree methods - Cursos unsigned short int
-int CNodeHeight(CNODE *node);
-CNODE *CNodeMemAlloc();
-CNODE *CNodeNewNode(unsigned short int val);
-CNODE *CNodeRightRotate(CNODE *y);
-CNODE *CNodeLeftRotate(CNODE *x);
-int CNodeGetBalance(CNODE *node);
-CNODE *CNodeInsert(CNODE *node, unsigned short int val);
-CNODE *CNodeLookUp(CNODE *node, unsigned short int val);
-CNODE *CNodePrint(CNODE *node);
+int PersonElemHeight(PERSON *elem);
+PERSON *PersonNewElem(unsigned long int val);
+PERSON *PersonRightRotate(PERSON *y);
+PERSON *PersonLeftRotate(PERSON *x);
+int PersonGetBalance(PERSON *node);
+PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data);
+PERSON *CNodeLookUp(PERSON *node, unsigned short int val);
+PERSON *CNodePrint(PERSON *node);
 
 // Result List methods
 RESLIST *ResMemAlloc();
