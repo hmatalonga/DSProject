@@ -39,28 +39,10 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
         
         // Insert data
         persons = insertPerson(persons, courses, rec);
-
+        
         n++;
     }
     fclose(fp);
-
-    /*
-    while (!feof(fp)) {
-        fscanf(fp, DATA_RECORD_FORMAT,
-                &rec.cal.day, &rec.cal.month, &rec.cal.year,
-                &rec.id, &rec.course, &rec.grade);
-
-        if ((courseRec = CNodeLookUp(tree, rec.course)) == NULL) {
-            tree = CNodeInsert(tree, rec.course);
-            courseRec = CNodeLookUp(tree, rec.course);
-        }
-
-        courseRec->hash->count[rec.grade]++;
-        courseRec->hash->table[rec.grade] = BLISTAppend(courseRec->hash->table[rec.grade], rec.cal, rec.id);
-
-        //n++; // for limited number of records
-    }
-    */
 
     return persons;
 }

@@ -54,18 +54,24 @@ int checkQueryFormat(char *query) {
         isValid = 2;
     else if (strcmp(query, "EXIT\n") == 0)
         isValid = 3;
+    /*
+    else if (sscanf(query, "SHOW %s %d\n") != EOF)
+        isValid = 4;
+    else if (sscanf(query, "COUNT %s %d\n") != EOF)
+        isValid = 5;
+     */
     return isValid;
 }
 
-int peformQuery(PERSON *tree, char *query, int verbose) {
+int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
     unsigned short int course;
     unsigned char grade;
     char operator, *pch = strtok(query, "C");
     unsigned long int totalRec = 0;
+    COURSE *rc = NULL;
+    NOTE *rg = NULL;
     RESLIST *output = NULL, *ret = NULL;
-    BLIST *tempGrade = NULL;
-    PERSON *courseTree = NULL;
-
+    QUERY *search = NULL, *best = NULL;
     /**
      * Ler query de pesquisa
      * Aceder a primeira query
@@ -77,13 +83,25 @@ int peformQuery(PERSON *tree, char *query, int verbose) {
      * sort lista de resultados
      * output de valores
      */
-    /*
     
     while (pch != NULL) {
         sscanf(pch, QUERY_FORMAT, &course, &operator, &grade);
-        
-        courseTree = CNodeLookUp(tree, course);
-        
+        search = appendCriteria(search, course, grade, operator);
+        pch = strtok(NULL, "C");
+    }
+    
+    if (search != NULL) {
+        best = findBest(search);
+        rc = courses[best->course-1];
+        if (rc != NULL)
+            rg = rc->grades[best->grade-1];
+        while (rg != NULL) {
+            output = ResAppend(output, rg->person);
+            rg = rg->next;
+        }
+    }
+    
+    /*
         if (operator == '+') {
             while (grade <= 20) {
                 tempGrade = courseTree->hash->table[grade];
@@ -112,20 +130,17 @@ int peformQuery(PERSON *tree, char *query, int verbose) {
                 grade--;
             }            
             //printf("C%hu < %hu\n", course, grade);
-        }
-        
-        // search for results
-        // if course = 0 show all courses
-        
-        pch = strtok(NULL, "C");
-    }
+        }     
+     */
     
     if (verbose)
         printf("DONE\nSorting results...\n");
     output = quickSort(output, getTail(output));
+    /*
     if (verbose)
         printf("DONE\nRemoving duplicates...\n");
     output = removeDuplicates(output);
+     */
     if (verbose)
         printf("DONE\n");
     long int c = ResCount(output);
@@ -134,6 +149,5 @@ int peformQuery(PERSON *tree, char *query, int verbose) {
     if (verbose)
         printf("Results count -> %ld\n", c);    
     
-     */
     return 0;
 }

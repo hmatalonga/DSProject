@@ -19,6 +19,7 @@ extern "C" {
     
 int max(int a, int b);
 
+/*
 // Linked List methods
 BLIST *BLISTMemAlloc();
 BLIST *BLISTCreate(BLIST *);
@@ -35,6 +36,7 @@ HASH *HashCreate(int size);
 unsigned char HashFunction(HASH *hashtable, unsigned char key);
 BLIST *HashLookUp(HASH *hashtable, unsigned char val);
 int HashAdd(HASH *hashtable, unsigned char val);
+ * */
 
 // Binary Tree methods - Cursos unsigned short int
 int PersonElemHeight(PERSON *elem);
@@ -48,8 +50,8 @@ PERSON *CNodePrint(PERSON *node);
 
 // Result List methods
 RESLIST *ResMemAlloc();
-RESLIST *ResAppend(RESLIST *head, BLIST *obj);
-RESLIST *ResFind(RESLIST *head, BLIST *obj);
+RESLIST *ResAppend(RESLIST *head, PERSON *obj);
+RESLIST *ResFind(RESLIST *head, PERSON *obj);
 RESLIST *ResCopy(RESLIST *output, RESLIST *nlist);
 RESLIST *ResClearAll(RESLIST *head);
 long int ResCount(RESLIST *head);
@@ -58,6 +60,11 @@ RESLIST *removeDuplicates(RESLIST *);
 RESLIST *getTail(RESLIST *elem);
 RESLIST *partition(RESLIST *head, RESLIST *end, RESLIST **newHead, RESLIST **newEnd);
 RESLIST *quickSort(RESLIST *head, RESLIST *end);
+
+// Query
+QUERY *appendCriteria(QUERY *head, unsigned short int course, unsigned char grade, char operator);
+QUERY *findBest(QUERY *head);
+QUERY *clearSearch(QUERY *head);
 
 #ifdef	__cplusplus
 }

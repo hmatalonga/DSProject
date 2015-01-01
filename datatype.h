@@ -47,27 +47,15 @@ typedef struct Course {
     NOTE **grades;
 } COURSE;
 
-typedef struct BList { // Lista com datas e pessoas
-    CALENDAR cal;
-    unsigned long int id;
-    struct BList *next;
-} BLIST;  
-
-typedef struct Hashtable {
-    int size;
-    unsigned long int count[HASH_SIZE];
-    BLIST **table;
-} HASH;
-
-typedef struct CNode {
+typedef struct Query {
     unsigned short int course;
-    HASH *hash;
-    struct CNode *left, *right;
-    int height;
-} CNODE;
+    unsigned char grade;
+    char operator;
+    struct Query *next;
+} QUERY;
 
 typedef struct ResList {
-    BLIST *elem;
+    PERSON *elem;
     struct ResList *next;
 } RESLIST;
 

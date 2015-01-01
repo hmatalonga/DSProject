@@ -23,7 +23,7 @@ void toUpperCase(char *value);
 void clearScreen();
 void doPause();
 int checkQueryFormat(char *query);
-int peformQuery(PERSON *tree, char *query, int verbose);
+int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose);
 
 
 #ifdef	__cplusplus
