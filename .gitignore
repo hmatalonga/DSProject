@@ -48,7 +48,7 @@ lib
 *.workspace.session
 
 /ProjectoED.txt
-
+nbproject/
 nbproject/private/
 build/
 nbbuild/
@@ -60,3 +60,4 @@ configurations.xml
 *.bash
 project.xml
 .dep.inc
+/gprof2dot.py

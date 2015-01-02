@@ -103,7 +103,7 @@ HASH *HashCreate(int size) {
     return new_table;
 }
 
-*/
+ */
 
 NOTE *appendNote(NOTE *head, PERSON *person, unsigned char grade) {
     NOTE *newp;
@@ -131,6 +131,10 @@ int PersonElemHeight(PERSON *elem) {
 
 PERSON *PersonNewElem(unsigned long int val) {
     PERSON *newNode = (PERSON *) malloc(sizeof (PERSON));
+    if (newNode == NULL) {
+        fprintf(stderr, "Memory Allocation error.\n");
+        exit(1);
+    }    
     newNode->id = val;
     newNode->course_array = NULL;
     newNode->course_index = 0;
@@ -180,26 +184,44 @@ int PersonGetBalance(PERSON *node) {
 
 PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
     int i = 0;
-    COURSE *course = courses[data.course - 1];
 
     // If current course has no grades alloc space
-    if (course == NULL) {
-        course = (COURSE *) malloc(sizeof (COURSE));
-        course->grades = (NOTE **) malloc(20 * sizeof (NOTE *));
-        for (i = 0; i < 20; i++)
-            course->grades[i] = NULL;
+    if (courses[data.course - 1] == NULL) {
+        courses[data.course - 1] = (COURSE *) malloc(sizeof (COURSE));
+
+        if (courses[data.course - 1] == NULL) {
+            fprintf(stderr, "Memory Allocation error.\n");
+            exit(1);
+        }
+
+        courses[data.course - 1]->grades = (NOTE **) malloc(21 * sizeof (NOTE *));
+
+        if (courses[data.course - 1]->grades == NULL) {
+            fprintf(stderr, "Memory Allocation error.\n");
+            exit(1);
+        }
+
+        for (i = 0; i < 21; i++)
+            courses[data.course - 1]->grades[i] = NULL;
     }
 
-    NOTE *grade = course->grades[data.grade - 1];
+    NOTE *grade = courses[data.course - 1]->grades[data.grade - 1];
 
     if (node == NULL) {
         PERSON *newPerson = PersonNewElem(data.id);
 
         grade = appendNote(grade, newPerson, data.grade);
-        course->counter++;
+        courses[data.course - 1]->counter++;
+        courses[data.course - 1]->grades[data.grade - 1] = grade;
 
         newPerson->course_index = data.course;
         newPerson->course_array = (NOTE **) malloc(data.course * sizeof (NOTE *));
+
+        if (newPerson->course_array == NULL) {
+            fprintf(stderr, "Memory Allocation error.\n");
+            exit(1);
+        }
+
         for (i = 0; i < data.course; i++)
             newPerson->course_array[i] = NULL;
 
@@ -212,43 +234,64 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
         // Update info about current person
         if (data.course > node->course_index) {
             // Need to expand course array
-            node->course_index = data.course;
+            
             node->course_array = (NOTE **) realloc(node->course_array, data.course * sizeof (NOTE *));
 
+            if (node->course_array == NULL) {
+                fprintf(stderr, "Memory Allocation error.\n");
+                exit(1);
+            }
+            
+            for (i = node->course_index; i < data.course; i++)
+                node->course_array[i] = NULL;
+            
+            node->course_index = data.course;
+
             grade = appendNote(grade, node, data.grade);
-            course->counter++;
+            courses[data.course - 1]->counter++;
+            courses[data.course - 1]->grades[data.grade - 1] = grade;
 
             node->course_array[data.course - 1] = grade;
         } else {
-            
-            NOTE *currGrade = node->course_array[data.course - 1];
-            
             // If there is no grade in that course
-            if (currGrade == NULL) {
+            if (node->course_array[data.course - 1] == NULL) {
                 grade = appendNote(grade, node, data.grade);
-                currGrade = grade;              
-            } else {
+                courses[data.course - 1]->grades[data.grade - 1] = grade;
+                node->course_array[data.course - 1] = grade;
+
+            }
+            else {
+                NOTE *currGrade = node->course_array[data.course - 1];
                 if (data.grade > currGrade->grade) {
                     // Has better grade then overwrite it
-                    if (currGrade->prev == NULL && currGrade->next == NULL)
-                        currGrade = NULL;
-                    else if (currGrade->prev == NULL)
-                        currGrade->next->prev = NULL;
-                    else if (currGrade->next == NULL)
-                        currGrade->prev->next = NULL;
-                    else {
-                        currGrade->prev->next = currGrade->next;
-                        currGrade->next->prev = currGrade->prev;
+                    if (currGrade->prev == NULL && currGrade->next == NULL) {
+                        
+                        free(courses[data.course - 1]->grades[currGrade->grade - 1]);
+                        courses[data.course - 1]->grades[currGrade->grade - 1] = NULL;
+                    
                     }
-                    free(currGrade);
+                    else {
+                        if (currGrade->prev == NULL) {
+                            courses[data.course - 1]->grades[currGrade->grade - 1]->next->prev = NULL;
+                            courses[data.course - 1]->grades[currGrade->grade - 1] = courses[data.course - 1]->grades[currGrade->grade - 1]->next;                            
+                        }
+                        else if (currGrade->next == NULL) {
+                            currGrade->prev->next = NULL;
+                        }
+                        else {
+                            currGrade->prev->next = currGrade->next;
+                            currGrade->next->prev = currGrade->prev;
+                        }
+                        free(node->course_array[data.course - 1]);
+                    }
 
                     grade = appendNote(grade, node, data.grade);
-                    currGrade = grade;
+                    courses[data.course - 1]->grades[data.grade - 1] = grade;
+                    node->course_array[data.course - 1] = grade; //currGrade
                 }
             }
         }
-    }
-    else if (data.id < node->id)
+    } else if (data.id < node->id)
         node->left = insertPerson(node->left, courses, data);
     else
         node->right = insertPerson(node->right, courses, data);
@@ -497,9 +540,10 @@ RESLIST *quickSort(RESLIST *head, RESLIST *end) {
 }
 
 // Query data structure operations
+
 QUERY *appendCriteria(QUERY *head, unsigned short int course, unsigned char grade, char operator) {
-    QUERY *newp;
-    if ((newp = (QUERY *)malloc(sizeof(QUERY))) == NULL) {
+    QUERY *newp = NULL;
+    if ((newp = (QUERY *) malloc(sizeof (QUERY))) == NULL) {
         fprintf(stderr, "Memory Allocation error.\n");
         exit(1);
     }
@@ -507,23 +551,25 @@ QUERY *appendCriteria(QUERY *head, unsigned short int course, unsigned char grad
     newp->grade = grade;
     newp->operator = operator;
     newp->next = head;
-    return newp;    
+    return newp;
 }
 
 QUERY *findBest(QUERY *head) {
     QUERY *ret = NULL;
     unsigned short int mark = 100;
     while (head != NULL) {
-        if (head->operator == '+')
+        if (head->operator == '+') {
             if (20 - head->grade < mark) {
                 ret = head;
                 mark = head->grade;
             }
-        else
+        }
+        else {
             if (head->grade < mark) {
                 ret = head;
                 mark = head->grade;
-            }
+            }            
+        }         
         head = head->next;
     }
     return ret;

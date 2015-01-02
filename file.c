@@ -13,7 +13,7 @@ int fileExists()
 PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, unsigned char *cc)
 {
     fp = fopen(filename, "r");
-    int n = 0;
+    int n = 0, i;
     TEMP rec;
     PERSON *courseRec = NULL;
 
@@ -22,25 +22,28 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
     // User for whole file
     // !feof(fp)
 
-    while (n < MAX_RECORD_NUMBER) {
+    while (!feof(fp)) {
         // Read data from file
         fscanf(fp, DATA_RECORD_FORMAT,
                &rec.cal.day, &rec.cal.month, &rec.cal.year,
                &rec.id, &rec.course, &rec.grade);
 
-        if (rec.grade > *cc) {
+        if (rec.grade > *cc) {      
+            // Extend array size
+            courses = (COURSE **) realloc(courses, rec.grade*sizeof(COURSE *));
+            // Set array new index to NULL
+            for (i = *cc; i < rec.grade; i++)
+                courses[i] = NULL;
             // Save new index
             *cc = rec.grade;            
-            // Extend array size
-            courses = (COURSE **) realloc(courses, *cc*sizeof(COURSE *));
-            // Set array new index to NULL
-            courses[*cc-1] = NULL;
         }
         
         // Insert data
         persons = insertPerson(persons, courses, rec);
         
-        n++;
+        NOTE *np = courses[rec.course-1]->grades[rec.grade-1];
+        
+        //n++;
     }
     fclose(fp);
 

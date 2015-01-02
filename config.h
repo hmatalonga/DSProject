@@ -18,7 +18,7 @@ extern "C" {
 #define PROGRAM_HEADER "=== PROJED (v2) Estruturas de Dados 2014 Hugo Matalonga ===\n\n"
 #define HELP_INFO "Help\n\nPROJED (v2)\n\nNAME\n\tprojed - Programa de Estruturas de Dados com Listas simples\n\nSYNOPSIS\n\t./projed [OPTIONS]\n\n\tUsage:\n\t\t./projed -v -f data.txt\n\n\tUsage inside the program:\n\t\tc12+16, c15+17c16-15, etc.\n\nOPTIONS\n\t-v\n\t\tRun program on verbose mode\n\n\t-f [FILE]\n\t\tRun program with a different source data file"
 #define PAUSE_MESSAGE "\n\nPress any key to continue..."
-#define MAX_RECORD_NUMBER 32768
+#define MAX_RECORD_NUMBER 500000//32768
 
 // <dia>/<mês>/<ano>;<bi>;<curso>;<classificação>
 #define DATA_RECORD_FORMAT "%hhu/%hhu/%hu;%ld;%hu;%hhu\n"

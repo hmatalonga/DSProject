@@ -23,6 +23,7 @@ void toUpperCase(char *value);
 void clearScreen();
 void doPause();
 int checkQueryFormat(char *query);
+int validaRegisto(NOTE **course_array, QUERY *criterio);
 int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose);
 
 
