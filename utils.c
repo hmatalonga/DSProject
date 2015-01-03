@@ -97,6 +97,9 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
     }
 
     if (verbose)
+        printf("Building query from dataset...\n");
+
+    if (verbose)
         start = clock();
 
     if (search != NULL) {
@@ -155,7 +158,7 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
         printf("Results count -> %ld\n", c);
 
     if (verbose) {
-        float msec = ((float)diff) / CLOCKS_PER_SEC;
+        float msec = ((float) diff) / CLOCKS_PER_SEC;
         printf("Time taken to build and sort results -> %f seconds", msec);
     }
 
