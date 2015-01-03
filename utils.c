@@ -59,10 +59,12 @@ int checkQueryFormat(char *query) {
 
 int validaRegisto(NOTE **course_array, unsigned short int course_index, QUERY *pesquisa, QUERY *best) {
     while (pesquisa != NULL) {
-        if (pesquisa == best) {
+        if (pesquisa->course == best->course) {
             pesquisa = pesquisa->next;
             continue;
         }
+        if (pesquisa->course > course_index)
+            return 0;
         if (course_array[pesquisa->course - 1] == NULL)
             return 0;
         if (pesquisa->operator == '+') {
@@ -103,7 +105,7 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
             best = findBest(search);
             rc = courses[best->course - 1];
             if (rc != NULL) {
-                rg = rc->grades[best->grade - 1];
+                rg = rc->grades[best->grade];
                 while (rg != NULL) {
                     if (validaRegisto(rg->person->course_array, rg->person->course_index, search, best))
                         output = ResAppend(output, rg->person);

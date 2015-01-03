@@ -382,7 +382,7 @@ QUERY *findBest(QUERY *head) {
     unsigned short int mark = 100;
     while (head != NULL) {
         if (head->operator == '+') {
-            if (20 - head->grade < mark) {
+            if ((20 - head->grade) < mark) {
                 ret = head;
                 mark = head->grade;
             }
