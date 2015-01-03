@@ -1,0 +1,293 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls   s/call   s/call  name    
+ 60.32      7.61     7.61 10000000     0.00     0.00  insertPerson
+ 27.60     11.10     3.48 637782936     0.00     0.00  PersonElemHeight
+  4.44     11.66     0.56 159375713     0.00     0.00  PersonGetBalance
+  3.17     12.06     0.40  4180627     0.00     0.00  appendNote
+  2.74     12.40     0.35 159515755     0.00     0.00  max
+  0.40     12.45     0.05        1     0.05    12.49  fileRead
+  0.32     12.49     0.04    61008     0.00     0.00  partition
+  0.32     12.53     0.04    35092     0.00     0.00  PersonLeftRotate
+  0.28     12.57     0.04                             frame_dummy
+  0.16     12.59     0.02    45857     0.00     0.00  getTail
+  0.08     12.60     0.01     8109     0.00     0.00  validaRegisto
+  0.08     12.61     0.01        2     0.01     0.01  ResClearAll
+  0.08     12.62     0.01        2     0.01     0.05  peformQuery
+  0.08     12.63     0.01        2     0.01     0.04  quickSort
+  0.00     12.63     0.00   100000     0.00     0.00  PersonNewElem
+  0.00     12.63     0.00    91591     0.00     0.00  ResAppend
+  0.00     12.63     0.00    34929     0.00     0.00  PersonRightRotate
+  0.00     12.63     0.00        4     0.00     0.00  clearScreen
+  0.00     12.63     0.00        3     0.00     0.00  appendCriteria
+  0.00     12.63     0.00        3     0.00     0.00  checkQueryFormat
+  0.00     12.63     0.00        3     0.00     0.00  toUpperCase
+  0.00     12.63     0.00        2     0.00     0.00  ResCount
+  0.00     12.63     0.00        2     0.00     0.00  ResPrint
+  0.00     12.63     0.00        2     0.00     0.00  doPause
+  0.00     12.63     0.00        1     0.00     0.00  fileExists
+  0.00     12.63     0.00        1     0.00     0.00  findBest
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+ 
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this 
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) for 0.08% of 12.63 seconds
+
+index % time    self  children    called     name
+                                                 <spontaneous>
+[1]     99.7    0.00   12.59                 main [1]
+                0.05   12.44       1/1           fileRead [2]
+                0.01    0.09       2/2           peformQuery [8]
+                0.00    0.00       4/4           clearScreen [19]
+                0.00    0.00       3/3           toUpperCase [22]
+                0.00    0.00       3/3           checkQueryFormat [21]
+                0.00    0.00       2/2           doPause [25]
+                0.00    0.00       1/1           fileExists [26]
+-----------------------------------------------
+                0.05   12.44       1/1           main [1]
+[2]     98.9    0.05   12.44       1         fileRead [2]
+                7.61    4.83 10000000/10000000     insertPerson [3]
+-----------------------------------------------
+                             149475713             insertPerson [3]
+                7.61    4.83 10000000/10000000     fileRead [2]
+[3]     98.5    7.61    4.83 10000000+149475713 insertPerson [3]
+                0.56    1.74 159375713/159375713     PersonGetBalance [5]
+                1.74    0.00 318751426/637782936     PersonElemHeight [4]
+                0.40    0.00 4180627/4180627     appendNote [6]
+                0.35    0.00 159375713/159515755     max [7]
+                0.04    0.00   35092/35092       PersonLeftRotate [10]
+                0.00    0.00   34929/34929       PersonRightRotate [16]
+                0.00    0.00  100000/100000      PersonNewElem [17]
+                             149475713             insertPerson [3]
+-----------------------------------------------
+                0.00    0.00  139716/637782936     PersonRightRotate [16]
+                0.00    0.00  140368/637782936     PersonLeftRotate [10]
+                1.74    0.00 318751426/637782936     PersonGetBalance [5]
+                1.74    0.00 318751426/637782936     insertPerson [3]
+[4]     27.6    3.48    0.00 637782936         PersonElemHeight [4]
+-----------------------------------------------
+                0.56    1.74 159375713/159375713     insertPerson [3]
+[5]     18.2    0.56    1.74 159375713         PersonGetBalance [5]
+                1.74    0.00 318751426/637782936     PersonElemHeight [4]
+-----------------------------------------------
+                0.40    0.00 4180627/4180627     insertPerson [3]
+[6]      3.2    0.40    0.00 4180627         appendNote [6]
+-----------------------------------------------
+                0.00    0.00   69858/159515755     PersonRightRotate [16]
+                0.00    0.00   70184/159515755     PersonLeftRotate [10]
+                0.35    0.00 159375713/159515755     insertPerson [3]
+[7]      2.7    0.35    0.00 159515755         max [7]
+-----------------------------------------------
+                0.01    0.09       2/2           main [1]
+[8]      0.8    0.01    0.09       2         peformQuery [8]
+                0.01    0.06       2/2           quickSort [9]
+                0.01    0.00    8109/8109        validaRegisto [14]
+                0.01    0.00       2/2           ResClearAll [15]
+                0.00    0.00       2/45857       getTail [13]
+                0.00    0.00   91591/91591       ResAppend [18]
+                0.00    0.00       3/3           appendCriteria [20]
+                0.00    0.00       2/2           ResCount [23]
+                0.00    0.00       2/2           ResPrint [24]
+                0.00    0.00       1/1           findBest [27]
+-----------------------------------------------
+                              106863             quickSort [9]
+                0.01    0.06       2/2           peformQuery [8]
+[9]      0.6    0.01    0.06       2+106863  quickSort [9]
+                0.04    0.00   61008/61008       partition [11]
+                0.02    0.00   45855/45857       getTail [13]
+                              106863             quickSort [9]
+-----------------------------------------------
+                0.04    0.00   35092/35092       insertPerson [3]
+[10]     0.3    0.04    0.00   35092         PersonLeftRotate [10]
+                0.00    0.00  140368/637782936     PersonElemHeight [4]
+                0.00    0.00   70184/159515755     max [7]
+-----------------------------------------------
+                0.04    0.00   61008/61008       quickSort [9]
+[11]     0.3    0.04    0.00   61008         partition [11]
+-----------------------------------------------
+                                                 <spontaneous>
+[12]     0.3    0.04    0.00                 frame_dummy [12]
+-----------------------------------------------
+                0.00    0.00       2/45857       peformQuery [8]
+                0.02    0.00   45855/45857       quickSort [9]
+[13]     0.2    0.02    0.00   45857         getTail [13]
+-----------------------------------------------
+                0.01    0.00    8109/8109        peformQuery [8]
+[14]     0.1    0.01    0.00    8109         validaRegisto [14]
+-----------------------------------------------
+                0.01    0.00       2/2           peformQuery [8]
+[15]     0.1    0.01    0.00       2         ResClearAll [15]
+-----------------------------------------------
+                0.00    0.00   34929/34929       insertPerson [3]
+[16]     0.0    0.00    0.00   34929         PersonRightRotate [16]
+                0.00    0.00  139716/637782936     PersonElemHeight [4]
+                0.00    0.00   69858/159515755     max [7]
+-----------------------------------------------
+                0.00    0.00  100000/100000      insertPerson [3]
+[17]     0.0    0.00    0.00  100000         PersonNewElem [17]
+-----------------------------------------------
+                0.00    0.00   91591/91591       peformQuery [8]
+[18]     0.0    0.00    0.00   91591         ResAppend [18]
+-----------------------------------------------
+                0.00    0.00       4/4           main [1]
+[19]     0.0    0.00    0.00       4         clearScreen [19]
+-----------------------------------------------
+                0.00    0.00       3/3           peformQuery [8]
+[20]     0.0    0.00    0.00       3         appendCriteria [20]
+-----------------------------------------------
+                0.00    0.00       3/3           main [1]
+[21]     0.0    0.00    0.00       3         checkQueryFormat [21]
+-----------------------------------------------
+                0.00    0.00       3/3           main [1]
+[22]     0.0    0.00    0.00       3         toUpperCase [22]
+-----------------------------------------------
+                0.00    0.00       2/2           peformQuery [8]
+[23]     0.0    0.00    0.00       2         ResCount [23]
+-----------------------------------------------
+                0.00    0.00       2/2           peformQuery [8]
+[24]     0.0    0.00    0.00       2         ResPrint [24]
+-----------------------------------------------
+                0.00    0.00       2/2           main [1]
+[25]     0.0    0.00    0.00       2         doPause [25]
+-----------------------------------------------
+                0.00    0.00       1/1           main [1]
+[26]     0.0    0.00    0.00       1         fileExists [26]
+-----------------------------------------------
+                0.00    0.00       1/1           peformQuery [8]
+[27]     0.0    0.00    0.00       1         findBest [27]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+   [4] PersonElemHeight       [20] appendCriteria         [13] getTail
+   [5] PersonGetBalance        [6] appendNote              [3] insertPerson
+  [10] PersonLeftRotate       [21] checkQueryFormat        [7] max
+  [17] PersonNewElem          [19] clearScreen            [11] partition
+  [16] PersonRightRotate      [25] doPause                 [8] peformQuery
+  [18] ResAppend              [26] fileExists              [9] quickSort
+  [15] ResClearAll             [2] fileRead               [22] toUpperCase
+  [23] ResCount               [27] findBest               [14] validaRegisto
+  [24] ResPrint               [12] frame_dummy

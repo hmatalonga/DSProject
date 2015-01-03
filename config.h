@@ -25,7 +25,8 @@ extern "C" {
 #define QUERY_FORMAT "%hu%c%hhu"
 
 #define QUERY_MAX_SIZE 128
-#define HASH_SIZE 21
+#define BUFFER_SIZE 1024
+#define BUFFER_NUM 64 
     
 // Error messages
 #define IO_ERROR_EXCEPTION "The file was not found...\n"

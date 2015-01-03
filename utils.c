@@ -85,6 +85,7 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
     NOTE *rg = NULL;
     RESLIST *output = NULL;
     QUERY *search = NULL, *best = NULL;
+    clock_t start, diff;
 
     while (pch != NULL) {
         sscanf(pch, QUERY_FORMAT, &course, &operator, &grade);
@@ -92,6 +93,9 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
             search = appendCriteria(search, course, grade, operator);
         pch = strtok(NULL, "C");
     }
+
+    if (verbose)
+        start = clock();
 
     if (search != NULL) {
         if (search->next != NULL) {
@@ -139,10 +143,19 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
     if (verbose)
         printf("DONE\n");
     unsigned long int c = ResCount(output);
+
+    if (verbose)
+        diff = clock() - start;
+
     printf("%ld\n", c);
     ResPrint(output);
     if (verbose)
         printf("Results count -> %ld\n", c);
+
+    if (verbose) {
+        int msec = diff * 1000 / CLOCKS_PER_SEC;
+        printf("Time taken to build and sort results -> %d seconds %d milliseconds", msec / 1000, msec % 1000);
+    }
 
     // Free search and output
     QUERY *current = search, *temp = NULL;

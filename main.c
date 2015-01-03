@@ -19,8 +19,8 @@ int main(int argc, char** argv) {
     // Data structures
     unsigned char cc = 20;
     PERSON *people = NULL;
-    COURSE **courses = (COURSE **) malloc(cc*sizeof(COURSE *));
-    
+    COURSE **courses = (COURSE **) malloc(cc * sizeof (COURSE *));
+
     char queryInput[QUERY_MAX_SIZE]; // String query
     char filePath[128]; // File path string
     FILE *fp = NULL; // File pointer
@@ -29,33 +29,33 @@ int main(int argc, char** argv) {
     int i = 0; // for variable helper
     int query_det = 0; // Query flag
     int isRunning = 0; // Program KeepAlive flag
-    
+
     if (argc > 1) {
         for (i = 1; i < argc; i++) {
             if (strcmp(argv[i], "-v") == 0)
                 verbose = 1; // Turn on verbose flag
             else if (strcmp(argv[i], "-f") == 0) {
-                if (argv[i+1] != NULL) {
+                if (argv[i + 1] != NULL) {
                     customFile = 1; // Turn on custom file flag
-                    strcpy(filePath, argv[i+1]); // Copy file path
+                    strcpy(filePath, argv[i + 1]); // Copy file path
                 }
             }
         }
     }
 
     // if custom flag is off load default data file
-    if (!customFile) 
+    if (!customFile)
         strcpy(filePath, DATA_FILE_PATH);
-    
+
     // Begin ---
     // Init courses array to NULL
     for (i = 0; i < 20; i++)
         courses[i] = NULL;
-    
+
     // Build screen
     clearScreen();
     printf(PROGRAM_HEADER);
-    
+
     // Load file into memory
     // Check
     if (verbose)
@@ -70,25 +70,25 @@ int main(int argc, char** argv) {
         people = fileRead(fp, filePath, people, courses, &cc);
         isRunning = 1; // Keep alive
         if (verbose)
-            printf("DONE\n");        
-    }
-    else {
+            printf("DONE\n");
+    } else {
         // else throw IO error exception
         printf(IO_ERROR_EXCEPTION);
-        return(EXIT_FAILURE);
+        return (EXIT_FAILURE);
     }
-    
-    if (verbose)
-        printf("Initialization done...\n");  
-    
+
+    if (verbose) {
+        printf("Initialization done...\n");
+    }
+
     // Loop
-    while(isRunning) {
-        clearScreen();       
+    while (isRunning) {
+        clearScreen();
         printf(PROGRAM_HEADER);
         printf("Type 'help' for more information, 'exit' to quit.\n\n");
         printf("-> ");
         // Read input
-        if (fgets(queryInput, sizeof(queryInput), stdin)) {
+        if (fgets(queryInput, sizeof (queryInput), stdin)) {
             if (verbose)
                 printf("Converting to uppercase...\n");
             toUpperCase(queryInput);
@@ -99,20 +99,18 @@ int main(int argc, char** argv) {
                 if (query_det == 1)
                     peformQuery(courses, queryInput, verbose);
                 else if (query_det == 2) {
-                    clearScreen();       
+                    clearScreen();
                     printf(PROGRAM_HEADER);
                     printf(HELP_INFO);
-                }
-                else if (query_det == 3)
+                } else if (query_det == 3)
                     return (EXIT_SUCCESS);
-            }
-            // else throw format error exception
+            }// else throw format error exception
             else {
                 printf(QUERY_ERROR_EXCEPTION);
             }
             doPause();
-        } 
-    // EndLoop
+        }
+        // EndLoop
     }
     return (EXIT_SUCCESS);
 }
