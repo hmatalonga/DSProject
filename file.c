@@ -15,7 +15,6 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
     fp = fopen(filename, "r");
     int n = 0, i;
     TEMP rec;
-    PERSON *courseRec = NULL;
 
     // Use for limited number of records
     // n < MAX_RECORD_NUMBER
@@ -40,8 +39,6 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
         
         // Insert data
         persons = insertPerson(persons, courses, rec);
-        
-        NOTE *np = courses[rec.course-1]->grades[rec.grade];
         
         //n++;
     }

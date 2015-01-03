@@ -97,7 +97,7 @@ int main(int argc, char** argv) {
             if ((query_det = checkQueryFormat(queryInput)) > 0) {
                 // Show query results if any
                 if (query_det == 1)
-                    peformQuery(people, courses, queryInput, verbose);
+                    peformQuery(courses, queryInput, verbose);
                 else if (query_det == 2) {
                     clearScreen();       
                     printf(PROGRAM_HEADER);
@@ -105,10 +105,6 @@ int main(int argc, char** argv) {
                 }
                 else if (query_det == 3)
                     return (EXIT_SUCCESS);
-                else if (query_det == 4)
-                    ;
-                else if (query_det == 5)
-                    ;
             }
             // else throw format error exception
             else {

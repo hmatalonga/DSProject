@@ -24,7 +24,7 @@ void clearScreen();
 void doPause();
 int checkQueryFormat(char *query);
 int validaRegisto(NOTE **course_array, unsigned short int course_index, QUERY *pesquisa, QUERY *best);
-int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose);
+int peformQuery(COURSE **courses, char *query, int verbose);
 
 
 #ifdef	__cplusplus

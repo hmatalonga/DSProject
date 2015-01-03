@@ -53,12 +53,7 @@ int checkQueryFormat(char *query) {
         isValid = 2;
     else if (strcmp(query, "EXIT\n") == 0)
         isValid = 3;
-    /*
-    else if (sscanf(query, "SHOW %s %d\n") != EOF)
-        isValid = 4;
-    else if (sscanf(query, "COUNT %s %d\n") != EOF)
-        isValid = 5;
-     */
+
     return isValid;
 }
 
@@ -82,30 +77,18 @@ int validaRegisto(NOTE **course_array, unsigned short int course_index, QUERY *p
     return 1;
 }
 
-int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
+int peformQuery(COURSE **courses, char *query, int verbose) {
     unsigned short int course;
-    unsigned char grade, valido = 0;
+    unsigned char grade;
     char operator, *pch = strtok(query, "C");
-    unsigned long int totalRec = 0;
     COURSE *rc = NULL;
     NOTE *rg = NULL;
-    RESLIST *output = NULL, *ret = NULL;
-    QUERY *search = NULL, *best = NULL, *tempt = NULL;
-    /**
-     * Ler query de pesquisa
-     * Aceder a primeira query
-     * Loop:
-     *   Percorrer Lista e encontrar equals da segunda lista
-     *   inserir elementos iguais numa nova lista
-     * :endLoop
-     * contar elementos da lista de resultados
-     * sort lista de resultados
-     * output de valores
-     */
+    RESLIST *output = NULL;
+    QUERY *search = NULL, *best = NULL;
 
     while (pch != NULL) {
         sscanf(pch, QUERY_FORMAT, &course, &operator, &grade);
-        if (grade < 20) //safefail
+        if (grade > 0 && grade < 20) //safefail
             search = appendCriteria(search, course, grade, operator);
         pch = strtok(NULL, "C");
     }
@@ -115,12 +98,13 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
             // varias pesquisas
             best = findBest(search);
             rc = courses[best->course - 1];
-            if (rc != NULL)
+            if (rc != NULL) {
                 rg = rc->grades[best->grade - 1];
-            while (rg != NULL) {
-                if (validaRegisto(rg->person->course_array, rg->person->course_index, search, best))
-                    output = ResAppend(output, rg->person);
-                rg = rg->next;
+                while (rg != NULL) {
+                    if (validaRegisto(rg->person->course_array, rg->person->course_index, search, best))
+                        output = ResAppend(output, rg->person);
+                    rg = rg->next;
+                }
             }
         } else {
             if (courses[search->course - 1] != NULL) {
@@ -136,7 +120,6 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
                         }
                     }
                 } else { // -
-
                     unsigned char i = search->grade - 1;
                     for (; i >= 0; i--) {
                         aux = courses[search->course - 1]->grades[i];
@@ -150,7 +133,18 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
         }
     }
 
-    // Free search
+    if (verbose)
+        printf("DONE\nSorting results...\n");
+    output = quickSort(output, getTail(output));
+    if (verbose)
+        printf("DONE\n");
+    unsigned long int c = ResCount(output);
+    printf("%ld\n", c);
+    ResPrint(output);
+    if (verbose)
+        printf("Results count -> %ld\n", c);
+
+    // Free search and output
     QUERY *current = search, *temp = NULL;
     while (current != NULL) {
         temp = current;
@@ -158,18 +152,6 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
         free(temp);
     }
     search = NULL;
-
-    if (verbose)
-        printf("DONE\nSorting results...\n");
-    output = quickSort(output, getTail(output));
-    if (verbose)
-        printf("DONE\n");
-    long int c = ResCount(output);
-    printf("%ld\n", c);
-    ResPrint(output);
-    if (verbose)
-        printf("Results count -> %ld\n", c);
-
     output = ResClearAll(output);
 
     return 0;
