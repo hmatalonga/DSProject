@@ -62,13 +62,24 @@ int checkQueryFormat(char *query) {
     return isValid;
 }
 
-int validaRegisto(NOTE **course_array, QUERY *criterio) {
-    if (course_array[criterio->course-1] == NULL)
-        return 0;
-    if (criterio->operator == '+')
-        return (course_array[criterio->course-1] > criterio->grade);
-    else
-        return (course_array[criterio->course-1] < criterio->grade);
+int validaRegisto(NOTE **course_array, unsigned short int course_index, QUERY *pesquisa, QUERY *best) {
+    while (pesquisa != NULL) {
+        if (pesquisa == best) {
+            pesquisa = pesquisa->next;
+            continue;
+        }
+        if (course_array[pesquisa->course - 1] == NULL)
+            return 0;
+        if (pesquisa->operator == '+') {
+            if (course_array[pesquisa->course - 1]->grade <= pesquisa->grade)
+                return 0;
+        } else {
+            if (course_array[pesquisa->course - 1]->grade >= pesquisa->grade)
+                return 0;
+        }
+        pesquisa = pesquisa->next;
+    }
+    return 1;
 }
 
 int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
@@ -94,7 +105,8 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
 
     while (pch != NULL) {
         sscanf(pch, QUERY_FORMAT, &course, &operator, &grade);
-        search = appendCriteria(search, course, grade, operator);
+        if (grade < 20) //safefail
+            search = appendCriteria(search, course, grade, operator);
         pch = strtok(NULL, "C");
     }
 
@@ -106,60 +118,34 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
             if (rc != NULL)
                 rg = rc->grades[best->grade - 1];
             while (rg != NULL) {
-                tempt = search;
-                while (tempt != NULL) {
-                    if (tempt == best) {
-                        tempt = tempt->next;
-                        continue;
-                    } else {
-                        if (rg->person->course_index < tempt->course)
-                            break;
-                        else {
-                            
-                            if (tempt->operator == '+') {
-                                if (rg->person->course_array[tempt->course-1] <= tempt->grade)
-                                    break;
-                                else
-                                    output = ResAppend(output, rg->person);
-                            }
-                            else {
-                                if (rg->person->course_array[tempt->course-1] > tempt->grade)
-                                    break;
-                                else
-                                    output = ResAppend(output, rg->person);
-                            }
-                            
-                        }
-                        tempt = tempt->next;
-                    }
-                }
-                //output = ResAppend(output, rg->person);
+                if (validaRegisto(rg->person->course_array, rg->person->course_index, search, best))
+                    output = ResAppend(output, rg->person);
                 rg = rg->next;
             }
         } else {
-            // Pesquisa unica
-            NOTE *aux = NULL;
-            if (search->operator == '+') {
-                unsigned char i = search->grade + 1; 
-                for (; i < 21; i++) {
-                    aux = courses[search->course-1]->grades[i];
-                    while (aux != NULL) {
-                        output = ResAppend(output, aux->person);
-                        aux = aux->next;
+            if (courses[search->course - 1] != NULL) {
+                // Pesquisa unica
+                NOTE *aux = NULL;
+                if (search->operator == '+') {
+                    unsigned char i = search->grade + 1;
+                    for (; i < 21; i++) {
+                        aux = courses[search->course - 1]->grades[i];
+                        while (aux != NULL) {
+                            output = ResAppend(output, aux->person);
+                            aux = aux->next;
+                        }
+                    }
+                } else { // -
+
+                    unsigned char i = search->grade - 1;
+                    for (; i >= 0; i--) {
+                        aux = courses[search->course - 1]->grades[i];
+                        while (aux != NULL) {
+                            output = ResAppend(output, aux->person);
+                            aux = aux->next;
+                        }
                     }
                 }
-            }
-            else { // -
-                if (courses[search->course-1] == NULL)
-                    break;
-                unsigned char i = search->grade - 1; 
-                for (; i >= 0; i--) {
-                    aux = courses[search->course-1]->grades[i];
-                    while (aux != NULL) {
-                        output = ResAppend(output, aux->person);
-                        aux = aux->next;
-                    }
-                }                
             }
         }
     }
@@ -173,46 +159,9 @@ int peformQuery(PERSON *people, COURSE **courses, char *query, int verbose) {
     }
     search = NULL;
 
-    /*
-        if (operator == '+') {
-            while (grade <= 20) {
-                tempGrade = courseTree->hash->table[grade];
-                while (tempGrade != NULL) {
-                    ret = ResAppend(ret, tempGrade);
-                    tempGrade = tempGrade->next;
-                }                
-                if (verbose)
-                    printf("\tUpdating output list...");
-                output = ResCopy(output, ret);
-                if (verbose)
-                    printf(" -> DONE\n");            
-                if (verbose)
-                    printf("\tClearing memory of auxiliar variables...");          
-                ret = ResClearAll(ret); // ret = NULL
-                if (verbose)
-                    printf(" -> DONE\n");                                 
-                grade++;
-            }                
-        }
-        else if(operator == '-') {
-            while (grade >= 0) {
-                totalRec += courseTree->hash->count[grade];
-                if (grade == 0)
-                    break;
-                grade--;
-            }            
-            //printf("C%hu < %hu\n", course, grade);
-        }     
-     */
-
     if (verbose)
         printf("DONE\nSorting results...\n");
     output = quickSort(output, getTail(output));
-    /*
-    if (verbose)
-        printf("DONE\nRemoving duplicates...\n");
-    output = removeDuplicates(output);
-     */
     if (verbose)
         printf("DONE\n");
     long int c = ResCount(output);

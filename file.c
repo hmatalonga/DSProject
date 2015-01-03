@@ -28,20 +28,20 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
                &rec.cal.day, &rec.cal.month, &rec.cal.year,
                &rec.id, &rec.course, &rec.grade);
 
-        if (rec.grade > *cc) {      
+        if (rec.course > *cc) {      
             // Extend array size
-            courses = (COURSE **) realloc(courses, rec.grade*sizeof(COURSE *));
+            courses = (COURSE **) realloc(courses, rec.course*sizeof(COURSE *));
             // Set array new index to NULL
-            for (i = *cc; i < rec.grade; i++)
+            for (i = *cc; i < rec.course; i++)
                 courses[i] = NULL;
             // Save new index
-            *cc = rec.grade;            
+            *cc = rec.course;            
         }
         
         // Insert data
         persons = insertPerson(persons, courses, rec);
         
-        NOTE *np = courses[rec.course-1]->grades[rec.grade-1];
+        NOTE *np = courses[rec.course-1]->grades[rec.grade];
         
         //n++;
     }

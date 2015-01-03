@@ -205,14 +205,14 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
             courses[data.course - 1]->grades[i] = NULL;
     }
 
-    NOTE *grade = courses[data.course - 1]->grades[data.grade - 1];
+    NOTE *grade = courses[data.course - 1]->grades[data.grade];
 
     if (node == NULL) {
         PERSON *newPerson = PersonNewElem(data.id);
 
         grade = appendNote(grade, newPerson, data.grade);
         courses[data.course - 1]->counter++;
-        courses[data.course - 1]->grades[data.grade - 1] = grade;
+        courses[data.course - 1]->grades[data.grade] = grade;
 
         newPerson->course_index = data.course;
         newPerson->course_array = (NOTE **) malloc(data.course * sizeof (NOTE *));
@@ -249,14 +249,14 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
 
             grade = appendNote(grade, node, data.grade);
             courses[data.course - 1]->counter++;
-            courses[data.course - 1]->grades[data.grade - 1] = grade;
+            courses[data.course - 1]->grades[data.grade] = grade;
 
             node->course_array[data.course - 1] = grade;
         } else {
             // If there is no grade in that course
             if (node->course_array[data.course - 1] == NULL) {
                 grade = appendNote(grade, node, data.grade);
-                courses[data.course - 1]->grades[data.grade - 1] = grade;
+                courses[data.course - 1]->grades[data.grade] = grade;
                 node->course_array[data.course - 1] = grade;
 
             }
@@ -266,14 +266,14 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
                     // Has better grade then overwrite it
                     if (currGrade->prev == NULL && currGrade->next == NULL) {
                         
-                        free(courses[data.course - 1]->grades[currGrade->grade - 1]);
-                        courses[data.course - 1]->grades[currGrade->grade - 1] = NULL;
+                        free(courses[data.course - 1]->grades[currGrade->grade]);
+                        courses[data.course - 1]->grades[currGrade->grade] = NULL;
                     
                     }
                     else {
                         if (currGrade->prev == NULL) {
-                            courses[data.course - 1]->grades[currGrade->grade - 1]->next->prev = NULL;
-                            courses[data.course - 1]->grades[currGrade->grade - 1] = courses[data.course - 1]->grades[currGrade->grade - 1]->next;                            
+                            courses[data.course - 1]->grades[currGrade->grade]->next->prev = NULL;
+                            courses[data.course - 1]->grades[currGrade->grade] = courses[data.course - 1]->grades[currGrade->grade]->next;    
                         }
                         else if (currGrade->next == NULL) {
                             currGrade->prev->next = NULL;
@@ -286,7 +286,7 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
                     }
 
                     grade = appendNote(grade, node, data.grade);
-                    courses[data.course - 1]->grades[data.grade - 1] = grade;
+                    courses[data.course - 1]->grades[data.grade] = grade;
                     node->course_array[data.course - 1] = grade; //currGrade
                 }
             }

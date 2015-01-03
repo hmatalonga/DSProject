@@ -17,7 +17,7 @@
  */
 int main(int argc, char** argv) {
     // Data structures
-    int cc = 20;
+    unsigned char cc = 20;
     PERSON *people = NULL;
     COURSE **courses = (COURSE **) malloc(cc*sizeof(COURSE *));
     
