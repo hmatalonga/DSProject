@@ -155,8 +155,8 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
         printf("Results count -> %ld\n", c);
 
     if (verbose) {
-        int msec = diff * 1000 / CLOCKS_PER_SEC;
-        printf("Time taken to build and sort results -> %d seconds %d milliseconds", msec / 1000, msec % 1000);
+        float msec = ((float)diff) / CLOCKS_PER_SEC;
+        printf("Time taken to build and sort results -> %f seconds", msec);
     }
 
     // Free search and output
