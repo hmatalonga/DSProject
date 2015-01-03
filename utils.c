@@ -130,7 +130,7 @@ int peformQuery(COURSE **courses, char *query, int verbose) {
                     }
                 } else { // -
                     unsigned char i = search->grade - 1;
-                    for (; i >= 0; i--) {
+                    for (; i > 0; i--) {
                         aux = courses[search->course - 1]->grades[i];
                         while (aux != NULL) {
                             output = ResAppend(output, aux->person);
