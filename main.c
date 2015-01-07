@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     int i = 0; // for variable helper
     int query_det = 0; // Query flag
     int isRunning = 0; // Program KeepAlive flag
-
+    
     if (argc > 1) {
         for (i = 1; i < argc; i++) {
             if (strcmp(argv[i], "-v") == 0)
