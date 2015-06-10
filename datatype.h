@@ -1,19 +1,3 @@
-/* 
- * File:   datatype.h
- * Author: hugo
- *
- * Created on 23 de Setembro de 2014, 19:09
- */
-
-#ifndef DATATYPE_H
-#define	DATATYPE_H
-
-#include "config.h"
-
-#ifdef	__cplusplus
-extern "C" {
-#endif
-
 typedef struct Calendar {
     unsigned char day, month;
     unsigned short int year;
@@ -58,10 +42,3 @@ typedef struct ResList {
     PERSON *elem;
     struct ResList *next;
 } RESLIST;
-
-#ifdef	__cplusplus
-}
-#endif
-
-#endif	/* DATATYPE_H */
-

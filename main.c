@@ -5,17 +5,12 @@
  * Created on 17 de Setembro de 2014, 16:40
  */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "config.h"
-#include "utils.h"
-#include "file.h"
+#include "projed.h"
 
 /*
  * Main
  */
-int main(int argc, char** argv) {
+int main(int argc, char **argv) {
     // Data structures
     unsigned char cc = 20;
     PERSON *people = NULL;

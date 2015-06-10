@@ -1,4 +1,4 @@
-#include "dataobj.h"
+#include "projed.h"
 
 int max(int a, int b) {
     return (a > b) ? a : b;

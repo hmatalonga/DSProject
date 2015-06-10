@@ -1,6 +1,4 @@
-#include <string.h>
-
-#include "file.h"
+#include "projed.h"
 
 int fileExists() {
     FILE *fp = fopen(DATA_FILE_PATH, "r");
@@ -13,7 +11,8 @@ int fileExists() {
 
 PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, unsigned char *cc) {
     fp = fopen(filename, "rb");
-    int n = 0, i;
+    int i;
+    //int n = 0;
     TEMP rec;
     
     // Use for limited number of records
