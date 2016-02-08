@@ -24,8 +24,7 @@ void toUpperCase(char *value);
 void clearScreen();
 void doPause();
 int checkQueryFormat(char *query);
-int validaRegisto(NOTE **course_array, unsigned short int course_index, QUERY *pesquisa, QUERY *best);
-int peformQuery(COURSE **courses, char *query, int verbose);
+void peformQuery(PLIST *dataset, char *query, int verbose);
 
 
 #ifdef	__cplusplus

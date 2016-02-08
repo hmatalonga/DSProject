@@ -2,13 +2,13 @@ typedef struct Calendar {
     unsigned char day, month;
     unsigned short int year;
 } CALENDAR;
-    
+
 typedef struct Temp {
     CALENDAR cal;
     unsigned long int id;
     unsigned short int course;
     unsigned char grade;
-} TEMP;     
+} TEMP;
 
 typedef struct Person PERSON;
 

@@ -14,12 +14,12 @@ PERSON *fileRead(FILE *fp, char *filename, PERSON *persons, COURSE **courses, un
     int i;
     //int n = 0;
     TEMP rec;
-    
+
     // Use for limited number of records
     // n < MAX_RECORD_NUMBER
     // User for whole file
     // !feof(fp)
-    
+
     while (!feof(fp)) {
         // Read data from file
         fscanf(fp, DATA_RECORD_FORMAT,

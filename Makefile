@@ -1,19 +1,15 @@
+OBJS=src/main.c src/dataobj.c src/file.c src/utils.c
 CC=gcc
-FLAGS=-c -Wall
-LIBS=-lm
-OBS=main.o file.o dataobj.o utils.o
+COMPILER_FLAGS=-Wall -Werror
+LINKER_FLAGS=-lm
+DEPS=src/projed.h
+OBJ_NAME=projed
 
-all : projed
- 
-main.o : projed.h main.c
-	$(CC) $(FLAGS) main.c
-file.o : projed.h file.c
-	$(CC) $(FLAGS) file.c
-dataobj.o : projed.h dataobj.c
-	$(CC) $(FLAGS) dataobj.c	
-utils.o : projed.h utils.c
-	$(CC) $(FLAGS) utils.c		
-projed : $(OBS)
-	$(CC) -o projed $(OBS) $(LIBS)
+all: projed
+
+%.o: %.c $(DEPS)
+	$(CC) -c -o $@ $< $(COMPILER_FLAGS)
+projed: $(OBJS)
+	$(CC) $(OBJS) $(COMPILER_FLAGS) $(LINKER_FLAGS) -o $(OBJ_NAME)
 clean:
-	rm -f projed *.o
+	rm $(OBJ_NAME)

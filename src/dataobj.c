@@ -33,7 +33,7 @@ PERSON *PersonNewElem(unsigned long int val) {
     if (newNode == NULL) {
         fprintf(stderr, "Memory Allocation error.\n");
         exit(1);
-    }    
+    }
     newNode->id = val;
     newNode->course_array = NULL;
     newNode->course_index = 0;
@@ -126,24 +126,24 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
 
         newPerson->course_array[data.course - 1] = grade;
 
-        return newPerson; // Nova pessoa 
+        return newPerson; // Nova pessoa
     }
 
     if (data.id == node->id) {
         // Update info about current person
         if (data.course > node->course_index) {
             // Need to expand course array
-            
+
             node->course_array = (NOTE **) realloc(node->course_array, data.course * sizeof (NOTE *));
 
             if (node->course_array == NULL) {
                 fprintf(stderr, "Memory Allocation error.\n");
                 exit(1);
             }
-            
+
             for (i = node->course_index; i < data.course; i++)
                 node->course_array[i] = NULL;
-            
+
             node->course_index = data.course;
 
             grade = appendNote(grade, node, data.grade);
@@ -164,15 +164,15 @@ PERSON *insertPerson(PERSON *node, COURSE **courses, TEMP data) {
                 if (data.grade > currGrade->grade) {
                     // Has better grade then overwrite it
                     if (currGrade->prev == NULL && currGrade->next == NULL) {
-                        
+
                         free(courses[data.course - 1]->grades[currGrade->grade]);
                         courses[data.course - 1]->grades[currGrade->grade] = NULL;
-                    
+
                     }
                     else {
                         if (currGrade->prev == NULL) {
                             courses[data.course - 1]->grades[currGrade->grade]->next->prev = NULL;
-                            courses[data.course - 1]->grades[currGrade->grade] = courses[data.course - 1]->grades[currGrade->grade]->next;    
+                            courses[data.course - 1]->grades[currGrade->grade] = courses[data.course - 1]->grades[currGrade->grade]->next;
                         }
                         else if (currGrade->next == NULL) {
                             currGrade->prev->next = NULL;
@@ -391,8 +391,8 @@ QUERY *findBest(QUERY *head) {
             if (head->grade < mark) {
                 ret = head;
                 mark = head->grade;
-            }            
-        }         
+            }
+        }
         head = head->next;
     }
     return ret;

@@ -61,3 +61,5 @@ configurations.xml
 project.xml
 .dep.inc
 /gprof2dot.py
+*.m
+projed
